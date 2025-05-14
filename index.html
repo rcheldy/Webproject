@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elegant Pastry Shop - Beige & Khaki Style</title>
+  <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+      width: 100%;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Georgia', serif;
+      background: #f5f0e6;
+      color: #6b6450;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    a {
+      color: #867b4f;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover, a:focus {
+      color: #bdb76b;
+      outline: none;
+    }
+
+    header {
+      background: #bdb76b;
+      box-shadow: 0 2px 5px rgba(189,183,107,0.5);
+      padding: 1rem 3vw;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100vw;
+    }
+    nav {
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .brand {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #f5f0e6;
+      letter-spacing: 0.1em;
+      user-select: none;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+    }
+    nav ul li {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    nav ul li button {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      color: #f5f0e6;
+      padding: 0.15rem 0.3rem;
+      border-radius: 6px;
+      transition: background-color 0.25s ease, color 0.3s ease;
+    }
+    nav ul li button:hover, nav ul li button:focus {
+      color: #6b6450;
+      background-color: #d8d2aa;
+      outline: none;
+    }
+
+    main {
+      flex-grow: 1;
+      margin: 2rem 3vw 4rem 3vw;
+      padding: 0;
+      width: 94vw;
+      max-width: none;
+    }
+
+    section {
+      display: none;
+      animation: fadeIn 0.6s ease forwards;
+      width: 100%;
+    }
+
+    section.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    /* Home */
+    #home {
+      text-align: center;
+      padding: 2rem 2vw;
+      background: linear-gradient(135deg, #efe9dc 0%, #d8d2aa 100%);
+      border-radius: 12px;
+      box-shadow: 0 8px 18px rgba(189,183,107,0.3);
+      max-width: none;
+      margin: 0 auto 3rem auto;
+    }
+    #home h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #6b6450;
+      letter-spacing: 0.1em;
+      user-select: none;
+    }
+    #home p {
+      font-size: 1.25rem;
+      max-width: 650px;
+      margin: 0 auto 2rem auto;
+      color: #806f3b;
+    }
+    #home img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(189,183,107,0.4);
+      filter: drop-shadow(0 2px 6px rgba(189,183,107,0.35));
+      user-select: none;
+    }
+
+    /* About */
+    #about {
+      background: #efe9dc;
+      border-radius: 12px;
+      padding: 2rem 3vw;
+      box-shadow: 0 6px 15px rgba(189,183,107,0.2);
+      margin-bottom: 3rem;
+      max-width: none;
+      color: #6b6450;
+      text-align: center;
+      user-select: none;
+    }
+    #about h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+    #about p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* Shop */
+    #shop h2 {
+      font-size: 2.5rem;
+      color: #6b6450;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+    #products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      width: 100%;
+    }
+    .product-card {
+      background: #faf6e6;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(189,183,107,0.25);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 25px rgba(189,183,107,0.35);
+    }
+    .product-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 0.8rem;
+      box-shadow: 0 3px 12px rgba(134,123,79,0.35);
+      user-select: none;
+    }
+    .product-name {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.3rem;
+      color: #867b4f;
+      user-select: none;
+    }
+    .product-price {
+      font-weight: 700;
+      color: #bdb76b;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      user-select: none;
+    }
+    .quantity-label {
+      font-size: 0.9rem;
+      margin-bottom: 0.15rem;
+      color: #867b4f;
+      user-select: none;
+    }
+    .quantity-input {
+      width: 60px;
+      padding: 5px 8px;
+      border: 1px solid #bdb76b;
+      border-radius: 6px;
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+      text-align: center;
+      font-family: 'Georgia', serif;
+      user-select: text;
+    }
+    button.add-to-cart {
+      background: #bdb76b;
+      border: none;
+      color: #6b6450;
+      padding: 0.6rem 0;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 1rem;
+      font-family: 'Georgia', serif;
+      user-select: none;
+    }
+    button.add-to-cart:hover, button.add-to-cart:focus {
+      background-color: #867b4f;
+      color: #f5f0e6;
+      outline: none;
+    }
+    #cart-summary {
+      background: #efe9dc;
+      padding: 1.25rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(189,183,107,0.18);
+      max-width: none;
+      margin: 0 auto 3rem auto;
+      width: 100%;
+      color: #867b4f;
+      user-select: none;
+    }
+    #cart-summary h3 {
+      font-size: 1.7rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      letter-spacing: 0.06em;
+    }
+    #cart-items {
+      list-style: none;
+      max-height: 240px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      color: #6b6450;
+      font-weight: 600;
+      user-select: text;
+    }
+    #cart-items li {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      align-items: center;
+    }
+    #cart-items li button.remove-from-cart {
+      margin-left: 1rem;
+      background: #867b4f;
+      border: none;
+      color: #f5f0e6;
+      padding: 0.2rem 0.6rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Georgia', serif;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    #cart-items li button.remove-from-cart:hover,
+    #cart-items li button.remove-from-cart:focus {
+      background-color: #bdb76b;
+      color: #6b6450;
+      outline: none;
+    }
+    #cart-total {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #bdb76b;
+      margin-bottom: 1rem;
+      text-align: right;
+      user-select: none;
+    }
+    #place-order-btn {
+      width: 100%;
+      background: #867b4f;
+      color: #f5f0e6;
+      padding: 0.75rem 0;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border: none;
+      font-family: 'Georgia', serif;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    #place-order-btn:hover, #place-order-btn:focus {
+      background-color: #bdb76b;
+      color: #6b6450;
+      outline: none;
+    }
+    #order-message {
+      font-weight: 700;
+      color: #64623b;
+      padding: 0.5rem 0;
+      text-align: center;
+      display: none;
+      user-select: none;
+    }
+
+    /* Customer reviews */
+    #customer h2 {
+      font-size: 2.5rem;
+      color: #6b6450;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+    #reviews-list {
+      max-width: none;
+      margin: 0 auto 2rem auto;
+      list-style: none;
+      background: #f7f6ec;
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      box-shadow: 0 6px 15px rgba(189,183,107,0.2);
+      max-height: 320px;
+      overflow-y: auto;
+      color: #867b4f;
+      font-weight: 600;
+      user-select: text;
+    }
+    #reviews-list li {
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid #bdb76b;
+      padding-bottom: 0.8rem;
+    }
+    #reviews-list li:last-child {
+      border-bottom: none;
+    }
+    .review-author {
+      font-weight: 700;
+      color: #867b4f;
+      margin-bottom: 0.3rem;
+      user-select: none;
+    }
+    .review-text {
+      font-style: italic;
+      color: #807d5a;
+      user-select: text;
+    }
+    #add-review-form {
+      max-width: none;
+      margin: 0 auto;
+      background: #d8d2aa;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(189,183,107,0.22);
+      color: #6b6450;
+      user-select: none;
+    }
+    #add-review-form label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 700;
+      color: #6b6450;
+    }
+    #add-review-form input,
+    #add-review-form textarea {
+      width: 100%;
+      padding: 0.45rem 0.5rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      border: 1px solid #bdb76b;
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      resize: vertical;
+      user-select: text;
+      color: #6b6450;
+      background-color: #faf9f0;
+    }
+    #add-review-form button {
+      padding: 0.6rem 1rem;
+      background: #867b4f;
+      border: none;
+      border-radius: 12px;
+      color: #f5f0e6;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      font-family: 'Georgia', serif;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    #add-review-form button:hover, #add-review-form button:focus {
+      background-color: #bdb76b;
+      color: #6b6450;
+      outline: none;
+    }
+
+    /* Contacts */
+    #contacts {
+      background: #efe9dc;
+      border-radius: 12px;
+      padding: 2rem 3vw;
+      box-shadow: 0 6px 15px rgba(189,183,107,0.16);
+      margin-bottom: 3rem;
+      max-width: none;
+      color: #6b6450;
+      text-align: center;
+      user-select: none;
+    }
+    #contacts h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+    #contacts p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    #contact-form {
+      max-width: none;
+      margin: 0 auto;
+      text-align: left;
+      width: 100%;
+      max-width: 600px;
+    }
+    #contact-form label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 700;
+      color: #6b6450;
+      user-select: none;
+    }
+    #contact-form input,
+    #contact-form textarea {
+      width: 100%;
+      padding: 0.5rem 0.6rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      border: 1px solid #bdb76b;
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      resize: vertical;
+      color: #6b6450;
+      background-color: #faf9f0;
+      user-select: text;
+    }
+    #contact-form button {
+      width: 100%;
+      padding: 0.7rem 0;
+      background: #867b4f;
+      border: none;
+      border-radius: 12px;
+      color: #f5f0e6;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      font-family: 'Georgia', serif;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    #contact-form button:hover, #contact-form button:focus {
+      background-color: #bdb76b;
+      color: #6b6450;
+      outline: none;
+    }
+    #contact-message {
+      color: #5b5a32;
+      font-weight: 700;
+      padding-top: 0.5rem;
+      text-align: center;
+      display: none;
+      user-select: none;
+    }
+
+    /* Footer */
+    footer {
+      background: #bdb76b;
+      color: #f5f0e6;
+      text-align: center;
+      padding: 1rem 1rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      user-select: none;
+      width: 100vw;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px){
+      nav ul {
+        gap: 1rem;
+        font-size: 0.9rem;
+      }
+      #home h1 {
+        font-size: 2.2rem;
+      }
+      #shop #products {
+        grid-template-columns: 1fr;
+      }
+      main {
+        margin: 1rem 3vw 3rem 3vw;
+        width: 94vw;
+      }
+      #about, #contacts, #shop #cart-summary, #customer #reviews-list, #add-review-form {
+        padding: 1rem 2vw;
+      }
+    }
+
+    /* Screen reader only */
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0,0,0,0) !important;
+      border: 0 !important;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand" tabindex="0">SwetDel Pastry Shop</div>
+    <ul role="menubar" aria-label="Primary navigation">
+      <li role="none"><button role="menuitem" aria-controls="home" aria-selected="true" tabindex="0" class="nav-btn" data-target="home">Home</button></li>
+      <li role="none"><button role="menuitem" aria-controls="about" tabindex="-1" class="nav-btn" data-target="about">About</button></li>
+      <li role="none"><button role="menuitem" aria-controls="shop" tabindex="-1" class="nav-btn" data-target="shop">Shop</button></li>
+      <li role="none"><button role="menuitem" aria-controls="customer" tabindex="-1" class="nav-btn" data-target="customer">Customer</button></li>
+      <li role="none"><button role="menuitem" aria-controls="contacts" tabindex="-1" class="nav-btn" data-target="contacts">Contacts</button></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section id="home" class="active" tabindex="0" aria-label="Home page">
+    <h1>Welcome to SwetDel Pastry Shop</h1>
+    <p>Discover the finest handcrafted pastries made from the freshest ingredients, lovingly baked to perfection for your delight.</p>
+    <img src="intro-1724754410.jpg" alt="Assorted beautiful pastries on wooden table" />
+  </section>
+
+  <section id="about" tabindex="0" aria-label="About Elegant Pastry Shop">
+    <h2>About Us</h2>
+    <p>SwetDel Pastry Shop was founded in 2010 with the mission to bring gourmet desserts and pastries to your doorsteps. Our chefs combine tradition with innovation to offer a delightful experience with every bite which means Sweet and Delicious.
+      A pastry shop, also called patisseries, offers a variety of sweet treats such as cakes, cookies, and pastries. These places are where you find beautifully decorated cakes for celebrations or pastries that catch your eye with their artistry.
+      Pastry breads are typically characterized by a high fat content, resulting in a flaky or crumbly texture, often with a rich flavor, and are often sweeter than simple breads.
+    </p>
+  </section>
+
+  <section id="shop" tabindex="0" aria-label="Shop Pastries">
+    <h2>Our Pastry Collection</h2>
+    <div id="products" role="list"></div>
+    <div id="cart-summary" aria-live="polite" aria-atomic="true">
+      <h3>Cart Summary</h3>
+      <ul id="cart-items" role="list"></ul>
+      <div id="cart-total">Total: $0.00</div>
+      <button id="place-order-btn" aria-disabled="true">Place Order</button>
+      <div id="order-message" role="alert"></div>
+    </div>
+  </section>
+
+  <section id="customer" tabindex="0" aria-label="Customer Reviews & Feedback">
+    <h2>Customer Reviews</h2>
+    <ul id="reviews-list" role="list" aria-live="polite" aria-atomic="true"></ul>
+    <form id="add-review-form" aria-label="Add a review form">
+      <label for="review-author">Your Name</label>
+      <input type="text" id="review-author" name="author" required aria-required="true" placeholder="John Doe" />
+      <label for="review-text">Your Review</label>
+      <textarea id="review-text" name="review" rows="4" required aria-required="true" placeholder="Write your lovely review here..."></textarea>
+      <button type="submit">Add Review</button>
+    </form>
+  </section>
+
+  <section id="contacts" tabindex="0" aria-label="Contact Us">
+    <h2>Contact Us</h2>
+    <p>If you have any questions, feedback, or want to place a custom order, please reach out to us!</p>
+    <form id="contact-form" aria-label="Contact form">
+      <label for="contact-name">Name</label>
+      <input type="text" id="contact-name" name="name" required aria-required="true" placeholder="Your name" />
+      <label for="contact-email">Email</label>
+      <input type="email" id="contact-email" name="email" required aria-required="true" placeholder="you@example.com" />
+      <label for="contact-message-field">Message</label>
+      <textarea id="contact-message-field" name="message" rows="4" required aria-required="true" placeholder="Write your message here..."></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+    <div id="contact-message" role="alert"></div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2024 SwetDel Pastry Shop. All rights reserved.
+</footer>
+
+<script>
+  // Navigation handling
+  const navButtons = document.querySelectorAll('.nav-btn');
+  const sections = document.querySelectorAll('main section');
+
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      navButtons.forEach(nb => {
+        nb.setAttribute('aria-selected', 'false');
+        nb.tabIndex = -1;
+      });
+      btn.setAttribute('aria-selected', 'true');
+      btn.tabIndex = 0;
+      sections.forEach(sec => sec.classList.remove('active'));
+      const target = btn.dataset.target;
+      const activeSection = document.getElementById(target);
+      if (activeSection) {
+        activeSection.classList.add('active');
+        activeSection.focus();
+      }
+    });
+  });
+
+  // Product data
+  const products = [
+    {
+      id: 1,
+      name: "Classic Croissant",
+      price: 3.50,
+      image:
+        "croisdant.jpeg"
+    },
+    {
+      id: 2,
+      name: "Chocolate Éclair",
+      price: 4.20,
+      image:
+        "chocolate.jpeg"
+    },
+    {
+      id: 3,
+      name: "Strawberry Tart",
+      price: 5.00,
+      image:
+        "starweery.jpeg"
+    },
+    {
+      id: 4,
+      name: "Cinnamon Roll",
+      price: 3.75,
+      image:
+        "roll.jpeg"
+    },
+    {
+      id: 5,
+      name: "Lemon Meringue Pie",
+      price: 5.50,
+      image:
+        "pie.jpeg"
+    },
+    {
+      id: 6,
+      name: "Blueberry Muffin",
+      price: 3.25,
+      image:
+        "blue.jpeg"
+    },
+    {
+      id: 7,
+      name: "Cream Buns",
+      price: 1.25,
+      image:
+        "buns.jpeg"
+    },
+    {
+      id: 8,
+      name: " White Bread",
+      price: 3.20,
+      image:
+        "white bread.jpeg"
+    },
+    {
+      id: 9,
+      name: "baguette",
+      price: 4.15,
+      image:
+        "baguette.jpeg.jpeg"
+    },
+    {
+      id: 10,
+      name: "Chococolate Cookie",
+      price: 2.20,
+      image:
+        "cookie.jpeg"
+    },
+    
+  ];
+
+  const productsContainer = document.getElementById("products");
+
+  function renderProducts() {
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.setAttribute('role', 'listitem');
+      card.innerHTML = `
+        <img src="${p.image}" alt="${p.name}" class="product-image" />
+        <div class="product-name">${p.name}</div>
+        <div class="product-price">$${p.price.toFixed(2)}</div>
+        <label class="quantity-label" for="qty-${p.id}">Quantity:</label>
+        <input type="number" id="qty-${p.id}" class="quantity-input" min="1" max="20" value="1" aria-label="Quantity for ${p.name}" />
+        <button class="add-to-cart" data-id="${p.id}" aria-describedby="desc-${p.id}">Add to Cart</button>
+        <span id="desc-${p.id}" class="sr-only">Add selected quantity of ${p.name} to shopping cart</span>
+      `;
+      productsContainer.appendChild(card);
+    });
+  }
+
+  // Shopping cart state
+  let cart = [];
+
+  const cartItemsEl = document.getElementById('cart-items');
+  const cartTotalEl = document.getElementById('cart-total');
+  const placeOrderBtn = document.getElementById('place-order-btn');
+  const orderMessage = document.getElementById('order-message');
+
+  function updateCartDisplay() {
+    // Clear list
+    cartItemsEl.innerHTML = '';
+    if (cart.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = 'Your cart is empty.';
+      li.style.color = '#867b4f';
+      li.style.fontStyle = 'italic';
+      cartItemsEl.appendChild(li);
+      placeOrderBtn.disabled = true;
+      placeOrderBtn.setAttribute('aria-disabled', 'true');
+      cartTotalEl.textContent = "Total: $0.00";
+      return;
+    }
+    // List items
+    cart.forEach((item, index) => {
+      const product = products.find(p => p.id === item.id);
+      const li = document.createElement('li');
+      li.textContent = `${product.name} x ${item.quantity} = $${(product.price * item.quantity).toFixed(2)}`;
+      
+      // Create a remove button
+      const removeButton = document.createElement('button');
+      removeButton.textContent = 'Remove';
+      removeButton.className = 'remove-from-cart';
+      removeButton.dataset.index = index; // Store the index of the item in the cart
+      li.appendChild(removeButton);
+      
+      cartItemsEl.appendChild(li);
+    });
+    // Calculate total
+    const total = cart.reduce((sum, item) => {
+      const product = products.find(p => p.id === item.id);
+      return sum + product.price * item.quantity;
+    }, 0);
+    cartTotalEl.textContent = `Total: $${total.toFixed(2)}`;
+    placeOrderBtn.disabled = false;
+    placeOrderBtn.setAttribute('aria-disabled', 'false');
+  }
+
+  function addToCart(productId, qty) {
+    if (qty < 1 || qty > 20) return;
+    const existing = cart.find(item => item.id === productId);
+    if (existing) {
+      existing.quantity += qty;
+      if (existing.quantity > 20) existing.quantity = 20;
+    } else {
+      cart.push({id: productId, quantity: qty});
+    }
+    updateCartDisplay();
+  }
+
+  productsContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('add-to-cart')) {
+      const id = parseInt(e.target.dataset.id);
+      const qtyInput = document.getElementById(`qty-${id}`);
+      let qty = parseInt(qtyInput.value);
+      if (isNaN(qty) || qty < 1) qty = 1;
+      if (qty > 20) qty = 20;
+      addToCart(id, qty);
+      qtyInput.value = "1";
+    }
+  });
+
+  // Remove item from cart on remove button click
+  cartItemsEl.addEventListener('click', (e) => {
+    if (e.target.classList.contains('remove-from-cart')) {
+      const index = e.target.dataset.index;
+      cart.splice(index, 1);
+      updateCartDisplay();
+    }
+  });
+
+  placeOrderBtn.addEventListener('click', () => {
+    if (cart.length === 0) return;
+    orderMessage.style.display = 'block';
+    orderMessage.textContent = 'Thank you for your order! Your delicious pastries will arrive soon.';
+    cart = [];
+    updateCartDisplay();
+    setTimeout(() => {
+      orderMessage.style.display = 'none';
+      document.querySelector('[data-target="home"]').click();
+    }, 5000);
+  });
+
+  renderProducts();
+  updateCartDisplay();
+
+  // Reviews handling
+  const reviewsList = document.getElementById('reviews-list');
+  const addReviewForm = document.getElementById('add-review-form');
+
+  let reviews = [
+    {author: "Ana C.", text: "Absolutely loved the croissants! Fresh and buttery."},
+    {author: "Kenneth R.", text: "The chocolate éclairs were a big hit at our party."},
+    {author: "Earl A.", text: "Friendly service and amazing pastries. Highly recommended!"},
+  ];
+
+  function renderReviews() {
+    reviewsList.innerHTML = '';
+    if (reviews.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = 'No reviews yet. Be the first to leave a review!';
+      li.style.color = '#867b4f';
+      li.style.fontStyle = 'italic';
+      reviewsList.appendChild(li);
+      return;
+    }
+    reviews.forEach(r => {
+      const li = document.createElement('li');
+      li.innerHTML = `<div class="review-author">${r.author}</div><div class="review-text">"${r.text}"</div>`;
+      reviewsList.appendChild(li);
+    });
+  }
+
+  addReviewForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const author = addReviewForm['author'].value.trim();
+    const text = addReviewForm['review'].value.trim();
+    if (author && text) {
+      reviews.push({author, text});
+      renderReviews();
+      addReviewForm.reset();
+      reviewsList.focus();
+    }
+  });
+
+  renderReviews();
+
+  // Contact form handling
+  const contactForm = document.getElementById('contact-form');
+  const contactMessage = document.getElementById('contact-message');
+
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    contactMessage.style.display = 'block';
+    contactMessage.textContent = 'Thank you for contacting us! We will get back to you shortly.';
+    contactForm.reset();
+    contactForm.querySelector('input,textarea').focus();
+    setTimeout(() => {
+      contactMessage.style.display = 'none';
+    }, 6000);
+  });
+
+</script>
+</body>
+</html>
+</content>
+</create_file>
